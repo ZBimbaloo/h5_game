@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>魔方</title>
+  <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+  
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+
+<div class="ui">
+
+  <div class="ui__background"></div>
+
+  <div class="ui__game"></div>
+
+  <div class="ui__texts">
+    <h1 class="text text--title">
+      <span></span>
+      <span>魔方</span>
+    </h1>
+
+    <div class="text text--note">
+      双击即可开始<!-- </br></br>滑动魔方可调整层数，滑动两侧可调整魔方角度</br> -->
+    </div>
+    <div class="text text--timer">
+      0:00
+    </div>
+    <div class="text text--complete">
+      <span>完成！</span>
+    </div>
+    <div class="text text--best-time">
+      <icon trophy></icon>
+      <span>最佳时间！</span>
+    </div>
+  </div>
+
+  <div class="ui__prefs">
+    <range name="flip" title="翻转类型" list="敏捷&nbsp;,平滑,弹性"></range>
+    <range name="scramble" title="敏捷度" list="20,25,30"></range>
+    <range name="fov" title="角度" list="下,上"></range>
+    <range name="theme" title="配色方案" list="配色一,配色二,配色三,配色四,配色五"></range>
+  </div>
+<!--Cube,Erno,Dust,Camo,Rain-->
+  <div class="ui__stats">
+    <div class="stats" name="total-solves">
+      <i>总局数:</i><b>-</b>
+    </div>
+    <div class="stats" name="best-time">
+      <i>最佳时间:</i><b>-</b>
+    </div>
+    <div class="stats" name="worst-time">
+      <i>最长时间:</i><b>-</b>
+    </div>
+    <div class="stats" name="average-5">
+      <i>5次平均值:</i><b>-</b>
+    </div>
+    <div class="stats" name="average-12">
+      <i>12次平均值:</i><b>-</b>
+    </div>
+    <div class="stats" name="average-25">
+      <i>25次平均值:</i><b>-</b>
+    </div>
+  </div>
+
+  <div class="ui__buttons">
+    <button class="btn btn--bl btn--stats">
+      <icon trophy></icon>
+    </button>
+    <button class="btn btn--bl btn--prefs">
+      <icon settings></icon>
+    </button>
+    <button class="btn btn--bl btn--back">
+      <icon back></icon>
+    </button>
+    <a href="#" class="btn btn--br btn--pwa">
+      
+    </button>
+  </div>
+
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/95/three.min.js'></script>
+
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

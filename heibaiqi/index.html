@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width,user-scalable=no,target-densitydpi=high-dpi">
+	<meta name="description" content="javascript黑白棋人机博弈" />
+	<meta name="keywords" content="黑白棋, Othello, 游戏, 算法, 人工智能, AI, 人机博弈" />
+	<title>黑白棋人机博弈游戏</title>
+<style type="text/css">
+body {
+	background: #c4824d;
+	font-family: "微软雅黑","黑体",serif;
+	margin: 0;
+	padding: 0;
+}
+#desk {
+	width: 750px;
+	margin: 0px auto;
+}
+#title {
+	float: left;
+	width: 60px;
+	padding: 15px;
+}
+#console {
+	float: left;
+	width: 110px;
+	padding: 10px 0px 0px 10px;
+}
+h1 {
+	margin: 10px 0px;
+	color: black;
+	font-size: 60px;
+	line-height: 70px;
+	font-weight: bold;
+	text-shadow: 0px 0px 6px #A33D1B, 0px 7px 3px #754B35;
+}
+h1 span {
+	color: white;
+}
+h3 {
+	margin: 0px 20px;
+	color: #330000;
+	font-size: 25px;
+	line-height: 30px;
+	font-weight: bold;
+	text-shadow: 0px 0px 4px #A33D1B, 0px 5px 2px #754B35;
+}
+
+.button {
+	margin: 15px 0px;
+	width: 100px;
+	height: 58px;
+	font-size: 30px;
+	line-height: 58px;
+	color: #440000;
+	background: #dd8e4f;
+	border: 1px solid #ff6600;
+	border-radius: 30px;
+	box-shadow: 0px 4px 10px #482915;
+	text-align: center;
+	cursor: default;
+}
+.button:hover {
+	background: #E4A774;
+	border: 1px solid #ff3300;
+	box-shadow: 0px 6px 10px #482915;
+}
+.button:active {
+	color: #600;
+	background: #eec7a6;
+	border: 1px solid #ff0000;
+	box-shadow: 0px 2px 5px #482915;
+	position: relative;
+	top: 2px;
+}
+
+.cbox {
+	border: 3px solid transparent;
+	border-radius: 10px;
+	width: 100px;
+	height: 56px;
+}
+.side {
+	border: 3px solid #cc3333;
+	background: #DBA977;
+}
+.cbox span {
+	float: right;
+	font-size: 30px;
+	line-height: 54px;
+	font-weight: bold;
+	color: #500;
+	text-shadow: 0px 0px 3px #E8C488;
+	padding-right: 7px;
+}
+
+#interface {
+	position: relative;
+	float: left;
+	width: 540px;
+	height: 560px;
+}
+
+#chessboard {
+	width: 522px;
+	height: 522px;
+	margin: 15px 7px;
+	border: 2px solid #CA521E;
+	background: #51150b;
+	box-shadow: 0px 8px 15px #482915;
+	-webkit-transform: perspective(740px) rotateX(0deg);
+	transform: perspective(740px) rotateX(0deg);
+	-webkit-transition: -webkit-transform 1s;
+	transition: transform 1s;
+}
+#chessboard table {
+	background: #835f2e;
+	border-spacing: 2px;
+	border: 20px solid #51150b;
+}
+#chessboard td {
+	width: 54px;
+	height: 54px;
+	border: 1px solid #e4c8a9;
+}
+#chessboard td:hover {
+	border: 1px solid #f00;
+}
+#chessboard .bg0 { background: #c1914f; }
+#chessboard .bg1 { background: #cba470; }
+
+.black, .white {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin: 5px;
+	padding: 17px;
+	box-shadow: 0px 4px 10px #482915;
+}
+.fdd #chessboard {
+	-webkit-transform: perspective(800px) rotateX(35deg);
+	transform: perspective(800px) rotateX(35deg);
+	box-shadow: 0px 13px 0px #71301a;
+}
+.fdd td .black, .fdd td .white {
+	margin: 0px 5px 10px 5px;
+	box-shadow: 0px 8px 10px #482915;
+}
+
+.black {
+	background: black;
+	-webkit-transform: rotateY(0deg);
+	transform: rotateY(0deg);
+}
+.white {
+	background: white;
+	-webkit-transform: rotateY(180deg);
+	transform: rotateY(180deg);
+}
+.reversal {
+	-webkit-transition: -webkit-transform 400ms ease-in-out, background 0ms 200ms;
+	transition: transform 400ms ease-in-out, background 0ms 200ms;
+}
+.newest:before, .reversal:before {
+	content: "";
+	display: block;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+}
+.newest:before {
+	background: #f00;
+}
+.reversal:before {
+	background: #66c;
+}
+.prompt {
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	margin: 20px;
+	padding: 0px;
+	background: #FFCC33;
+}
+
+#selectbox {
+	position: absolute;
+	top: 50px;
+	left: 50%;
+	margin-left: -220px;
+	width: 330px;
+	height: auto;
+	background: #DBA977;
+	border: 3px solid #98472C;
+	border-width: 3px 30px;
+	box-shadow: 0px 5px 15px #482915;
+	padding: 10px 25px;
+	color: #472E25;
+	font-size: 28px;
+	line-height: 45px;
+	display: none;
+}
+#selectbox input:checked + span {
+	color: #990000;
+	text-shadow: 0px 0px 3px #FF9900;
+}
+
+#buttons {
+	margin: 0px 40px;
+}
+#buttons div {
+	float: left;
+	margin: 0px 10px;
+}
+#copyright {
+	clear: left;
+	text-align: center;
+	color: #642100;
+	padding: 5px;
+	font-size: 18px;
+}
+
+#pass, #airuning {
+	position: absolute;
+	top: 12px;
+	left: 50%;
+	margin-left: -150px;
+	width: 300px;
+	height: auto;
+	border-radius: 13px;
+	text-align: center;
+	font-size: 18px;
+	line-height: 26px;
+	background: rgba(230,160,80,0.6);
+	color: #330000;
+	text-shadow: 0px 0px 3px #900;
+	display: none;
+}
+#airuning {
+	top: 500px;
+	margin-left: -100px;
+	width: 200px;
+}
+
+@media screen and (max-width: 750px) {
+	#desk {
+		width: 540px;
+	}
+
+	#title {
+		width: 100%;
+		padding: 0px;
+		text-align: center;
+	}
+	#console {
+		width: 96%;
+		padding: 10px 2%;
+	}
+	h1, h3 {
+		display: inline-block;
+	}
+
+	.cbox {
+		float: left;
+	}
+	#console .button {
+		float: left;
+		margin: 0px 5px;
+		width: 90px;
+	}
+
+	#no3d {
+		display: none;
+	}
+}
+</style>
+</head>
+<body>
+<div id="desk">
+	<div id="title">
+		<h1>黑<span>白</span>棋</h1>
+		<h3>人机对战游戏</h3>
+	</div>
+	<div id="interface">
+		<div id="chessboard"></div>
+		<div id="pass"></div>
+		<div id="airuning">AI运算中……</div>
+		<div id="selectbox">
+			<label><input type="radio" name="side" checked="checked"><span>玩家先走</span></label>
+			<label><input type="radio" name="side"><span>电脑先走</span></label><br />
+			<label><input type="radio" name="level" checked="checked"><span>难度一 每次计算 0.02 秒</span></label><br />
+			<label><input type="radio" name="level"><span>难度二 每次计算 0.1 秒</span></label><br />
+			<label><input type="radio" name="level"><span>难度三 每次计算 0.5 秒</span></label><br />
+			<label><input type="radio" name="level"><span>难度四 每次计算 2 秒</span></label><br />
+			<label><input type="radio" name="level"><span>难度五 每次计算 5 秒</span></label><br />
+			<label><input type="radio" name="level"><span>难度六 每次计算 10 秒</span></label><br />
+			<label><input type="radio" name="level"><span>难度七 每次计算 20 秒</span></label><br />
+			<div id="buttons">
+				<div id="ok" class="button">确定</div>
+				<div id="cancel" class="button">取消</div>
+			</div>
+		</div>
+
+	</div>
+	<div id="console">
+		<div id="side1" class="cbox">
+			<span>0</span><div class="black"></div>
+		</div>
+		<div id="side2" class="cbox">
+			<span>0</span><div class="white"></div>
+		</div>
+		<div id="play" class="button">开始</div>
+		<div id="back" class="button">悔棋</div>
+		<div id="no3d" class="button">3D</div>
+		<div id="explain" class="button">说明</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
